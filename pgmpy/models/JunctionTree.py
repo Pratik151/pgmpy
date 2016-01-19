@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from pgmpy.models import ClusterGraph
-import numpy as np
 
 class JunctionTree(ClusterGraph):
     """
