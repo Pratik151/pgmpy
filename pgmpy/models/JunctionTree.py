@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from pgmpy.models import ClusterGraph
-
+import numpy as np
 
 class JunctionTree(ClusterGraph):
     """
@@ -97,3 +97,26 @@ class JunctionTree(ClusterGraph):
             raise ValueError('The Junction Tree defined is not fully connected.')
 
         return super(JunctionTree, self).check_model()
+
+    def copy(self):
+        """
+        Returns a copy of JunctionTree.
+
+        Returns
+        -------
+        JunctionTree : copy of JunctionTree
+
+        Examples
+        -------
+        >>> from pgmpy.models import JunctionTree
+        >>> G.add_edges_from([(('a', 'b', 'c'), ('a', 'b')), (('a', 'b', 'c'), ('a', 'c'))])
+        >>> Gcopy = G.copy()
+        >>> Gcopy.edges()
+        [(('a', 'b'), ('a', 'b', 'c')), (('a', 'c'), ('a', 'b', 'c'))]
+
+        """
+        copy = JunctionTree(self.edges())
+        if self.factors:
+            factors_copy = [factor.copy() for factor in self.factors]
+            copy.add_factors(*factors_copy)
+        return copy
